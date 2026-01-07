@@ -1,9 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Leaf, TrendingUp, AlertTriangle, MessageCircle } from "lucide-react";
+import { Leaf, TrendingUp, AlertTriangle, MessageCircle, Shield, CloudSun, Mic } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { WeatherWidget } from "./WeatherWidget";
+import { PriceTicker } from "./PriceTicker";
+import { PWAInstallBanner } from "./PWAInstallBanner";
 
 export function Dashboard() {
   const { t } = useLanguage();
@@ -50,8 +52,14 @@ export function Dashboard() {
       {/* Hero Section */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-green-600 to-blue-600 p-6 text-white">
         <div className="relative z-10">
-          <h1 className="mb-2 text-white">{t('welcomeBack')}!</h1>
-          <p className="text-green-100">{t('farmingAssistant')}</p>
+          <h1 className="mb-1 text-white">{t('welcomeBack')}!</h1>
+          <p className="text-green-100">Smart farming for Vidarbha — weather‑safe sprays, better ROI, local advice</p>
+          <p className="text-green-100/90 text-xs mt-1">विदर्भासाठी स्मार्ट शेती — हवामान सुरक्षित फवारणी, अधिक नफा, स्थानिक मार्गदर्शन</p>
+          <div className="mt-4 flex gap-2 flex-wrap">
+            <Badge className="bg-white/20 text-white border-white/30"><CloudSun className="h-3 w-3 mr-1" /> Offline Ready</Badge>
+            <Badge className="bg-white/20 text-white border-white/30"><Shield className="h-3 w-3 mr-1" /> Govt Schemes</Badge>
+            <Badge className="bg-white/20 text-white border-white/30"><Mic className="h-3 w-3 mr-1" /> Voice Support</Badge>
+          </div>
         </div>
         <div className="absolute right-4 top-4 opacity-20">
           <ImageWithFallback
@@ -61,6 +69,10 @@ export function Dashboard() {
           />
         </div>
       </div>
+
+      {/* PWA Install & Ticker */}
+      <PWAInstallBanner />
+      <PriceTicker />
 
       {/* Stats Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -85,6 +97,37 @@ export function Dashboard() {
 
       {/* Weather Section */}
       <WeatherWidget compact={true} />
+
+      {/* Value Props */}
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle>Increase Income</CardTitle>
+            <CardDescription>Compare top 3 crops ROI quickly</CardDescription>
+          </CardHeader>
+          <CardContent className="text-sm text-muted-foreground">
+            Get personalized profitability based on your acreage and prices.
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Reduce Risk</CardTitle>
+            <CardDescription>Check PMFBY eligibility</CardDescription>
+          </CardHeader>
+          <CardContent className="text-sm text-muted-foreground">
+            Protect against weather losses with low‑premium crop insurance.
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Save Inputs</CardTitle>
+            <CardDescription>Track soil pH & Jeevamrut</CardDescription>
+          </CardHeader>
+          <CardContent className="text-sm text-muted-foreground">
+            Optimize fertilizer with soil health insights and organic practices.
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Recent Activity */}
       <div className="grid gap-6 md:grid-cols-2">
