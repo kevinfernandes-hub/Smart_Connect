@@ -4,10 +4,11 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Progress } from "./ui/progress";
 import { Alert, AlertDescription } from "./ui/alert";
-import { Upload, Camera, FileImage, Loader2, CheckCircle, AlertTriangle, Lightbulb, Wifi, WifiOff, Play, Info, Cloud } from "lucide-react";
+import { Upload, Camera, FileImage, Loader2, CheckCircle, AlertTriangle, Lightbulb, Wifi, WifiOff, Play, Info, Cloud, ChevronDown, ChevronUp } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { diseaseService } from "../services/api";
 import { WeatherWidget } from "./WeatherWidget";
+import { DiseaseVerificationPanel } from "./DiseaseVerificationPanel";
 import { toast } from "sonner@2.0.3";
 
 interface DiseaseResult {
@@ -25,6 +26,7 @@ export function DiseaseDetection() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<DiseaseResult | null>(null);
   const [backendStatus, setBackendStatus] = useState<'checking' | 'online' | 'offline'>('checking');
+  const [showVerification, setShowVerification] = useState(false);
 
   // Check backend status
   const checkBackendStatus = async () => {
@@ -227,7 +229,30 @@ export function DiseaseDetection() {
         </Alert>
       )}
 
-      {/* Weather Conditions */}
+      {/* Disease Scan Endpoint Verification */}
+      <Card className="border-purple-200">
+        <CardHeader 
+          className="cursor-pointer hover:bg-purple-50"
+          onClick={() => setShowVerification(!showVerification)}
+        >
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2">
+              🔬 Endpoint Verification
+            </CardTitle>
+            {showVerification ? (
+              <ChevronUp className="h-5 w-5 text-purple-600" />
+            ) : (
+              <ChevronDown className="h-5 w-5 text-purple-600" />
+            )}
+          </div>
+          <CardDescription>Test /disease_scan endpoint health and response validation</CardDescription>
+        </CardHeader>
+        {showVerification && (
+          <CardContent className="pt-0">
+            <DiseaseVerificationPanel />
+          </CardContent>
+        )}
+      </Card>
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
